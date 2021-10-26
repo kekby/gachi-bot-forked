@@ -1,5 +1,5 @@
 FROM node:alpine
-WORKDIR discord-music-bot
+WORKDIR gachi-bot
 RUN apk add ffmpeg
 
 COPY . .
