@@ -51,7 +51,14 @@ module.exports = class extends SlashCommand {
         }
         
         await ctx.sendFollowUp({ content: `${emojis.thinking} | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...` });
-        searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+
+        if (searchResult.playlist) {
+            queue.addTracks(searchResult.tracks);
+            ctx.sendFollowUp({ content: `${emojis.done} | Added ${searchResult.tracks.length} tracks to queue` });
+        } else {
+            queue.addTrack(searchResult.tracks[0]);
+        }
+        
         if (!queue.playing) await queue.play();
     }
 };
