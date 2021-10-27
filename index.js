@@ -5,6 +5,7 @@ const { Client } = require('discord.js');
 const { Player } = require('discord-player');
 const { registerPlayerEvents } = require('./events');
 const { generateDocs } = require('./docs');
+const { extractEmojis, emojis } = require('./helpers/emojis');
 
 dotenv.config();
 
@@ -25,9 +26,11 @@ const creator = new SlashCreator({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-
     console.log('Generating docs...');
     generateDocs(creator.commands);
+    console.log('Extracting emojis...');
+    extractEmojis(client.emojis.cache);
+    console.log('extracted emojis: ', emojis);
 });
 
 creator

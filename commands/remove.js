@@ -1,4 +1,5 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
+const { emojis } = require('../helpers/emojis');
 
 module.exports = class extends SlashCommand {
     constructor(creator) {
@@ -25,12 +26,12 @@ module.exports = class extends SlashCommand {
         await ctx.defer();
 
         const queue = client.player.getQueue(ctx.guildID);
-        if (!queue) return void ctx.sendFollowUp({ content: '❌ | No music is being played!' });
+        if (!queue) return void ctx.sendFollowUp({ content: `${emojis.sad} | No music is being played!` });
         
         const trackIndex = ctx.options.track - 1;
         const trackName = queue.tracks[trackIndex].title;
         queue.remove(trackIndex);
 
-        ctx.sendFollowUp({ content: `❌ | Removed track ${trackName}.` });
+        ctx.sendFollowUp({ content: `${emojis.cry} | Removed track ${trackName}.` });
     }
 };

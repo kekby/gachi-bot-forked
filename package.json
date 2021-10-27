@@ -7,7 +7,8 @@
   "author": "Androz2091 <androz2091@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "@discord-player/downloader": "^3.0.1",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0",
-    "mdtable": "^0.3.1"
+    "mdtable": "^0.3.1",
+    "nodemon": "^2.0.14"
   }
 }

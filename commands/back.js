@@ -1,5 +1,5 @@
 const { SlashCommand } = require('slash-create');
-
+const { emojis } = require('../helpers/emojis');
 module.exports = class extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -21,6 +21,6 @@ module.exports = class extends SlashCommand {
         
         await queue.back();
 
-        ctx.sendFollowUp({ content: '✅ | Playing the previous track!' });
+        ctx.sendFollowUp({ content: `${emojis.done}| Playing the previous track!` });
     }
 };

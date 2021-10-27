@@ -11,12 +11,12 @@ module.exports.generateDocs = (commands) => {
         header: [ 'Name', 'Description', 'Options' ],
         alignment: ['L', 'C', 'R'],
         rows: []
-    }
+    };
 
     const tableSettings = {
         borders: true,
         padding: 1
-    }
+    };
 
     commands.forEach((cmd) => {
         tableData.rows.push([ `**/${cmd.commandName}**`, cmd.description, cmd.options?.map((o) => `\\<${o.name}>`).join(' ') || '' ]);
@@ -26,4 +26,4 @@ module.exports.generateDocs = (commands) => {
 
     writeFileSync('./README.md', finalReadme, 'utf-8');
 
-}
+};

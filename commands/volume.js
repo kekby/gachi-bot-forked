@@ -1,4 +1,5 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
+const { emojis } = require('../helpers/emojis');
 
 module.exports = class extends SlashCommand {
     constructor(creator) {
@@ -24,13 +25,13 @@ module.exports = class extends SlashCommand {
         
         await ctx.defer();
         const queue = client.player.getQueue(ctx.guildID);
-        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: '❌ | No music is being played!' });
+        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: `${emojis.sad} | No music is being played!` });
         const vol = parseInt(ctx.options.amount);
-        if (!vol) return void ctx.sendFollowUp({ content: `🎧 | Current volume is **${queue.volume}**%!` });
-        if (vol < 0 || vol > 100) return void ctx.sendFollowUp({ content: '❌ | Volume range must be 0-100' });
+        if (!vol) return void ctx.sendFollowUp({ content: `${emojis.done} | Current volume is **${queue.volume}**%!` });
+        if (vol < 0 || vol > 100) return void ctx.sendFollowUp({ content: `${emojis.trapped} | Volume range must be 0-100` });
         const success = queue.setVolume(vol);
         return void ctx.sendFollowUp({
-            content: success ? `✅ | Volume set to **${vol}%**!` : '❌ | Something went wrong!'
+            content: success ? `${emojis.done} | Volume set to **${vol}%**!` : `${emojis.cry} | Something went wrong!`
         });
 
     }

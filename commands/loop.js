@@ -1,5 +1,6 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
 const { QueueRepeatMode } = require('discord-player');
+const { emojis } = require('../helpers/emojis');
 
 module.exports = class extends SlashCommand {
     constructor(creator) {
@@ -43,10 +44,10 @@ module.exports = class extends SlashCommand {
 
         await ctx.defer();
         const queue = client.player.getQueue(ctx.guildID);
-        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: '❌ | No music is being played!' });
+        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: `${emojis.sad} | No music is being played!` });
         const loopMode = ctx.options.mode;
         const success = queue.setRepeatMode(loopMode);
-        const mode = loopMode === QueueRepeatMode.TRACK ? '🔂' : loopMode === QueueRepeatMode.QUEUE ? '🔁' : '▶';
-        return void ctx.sendFollowUp({ content: success ? `${mode} | Updated loop mode!` : '❌ | Could not update loop mode!' });
+        const mode = loopMode === QueueRepeatMode.TRACK || loopMode === QueueRepeatMode.QUEUE ? emojis.trapped : emojis.hype;
+        return void ctx.sendFollowUp({ content: success ? `${mode} | Updated loop mode!` : `${emojis.sad} | Could not update loop mode!` });
     }
 };

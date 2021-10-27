@@ -1,6 +1,6 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
 const { QueryType } = require('discord-player');
-
+const { emojis } = require('../helpers/emojis');
 module.exports = class extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -47,10 +47,10 @@ module.exports = class extends SlashCommand {
             if (!queue.connection) await queue.connect(member.voice.channel);
         } catch {
             void client.player.deleteQueue(ctx.guildID);
-            return void ctx.sendFollowUp({ content: 'Could not join your voice channel!' });
+            return void ctx.sendFollowUp({ content: `${emojis.cry} | Could not join your voice channel!`});
         }
-
-        await ctx.sendFollowUp({ content: `⏱ | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...` });
+        
+        await ctx.sendFollowUp({ content: `${emojis.thinking} | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...` });
         searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if (!queue.playing) await queue.play();
     }

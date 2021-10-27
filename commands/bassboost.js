@@ -1,5 +1,5 @@
 const { SlashCommand } = require('slash-create');
-
+const { emojis } = require('../helpers/emojis');
 module.exports = class extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -17,14 +17,14 @@ module.exports = class extends SlashCommand {
         await ctx.defer();
 
         const queue = client.player.getQueue(ctx.guildID);
-        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: '❌ | No music is being played!' });
+        if (!queue || !queue.playing) return void ctx.sendFollowUp({ content: `${emojis.sad} | No music is being played!` });
         await queue.setFilters({
             bassboost: !queue.getFiltersEnabled().includes('bassboost'),
             normalizer2: !queue.getFiltersEnabled().includes('bassboost') // because we need to toggle it with bass
         });
 
         setTimeout(() => {
-            return void ctx.sendFollowUp({ content: `🎵 | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!` });
+            return void ctx.sendFollowUp({ content: `${emojis.hype} | Bassboost ${queue.getFiltersEnabled().includes('bassboost') ? 'Enabled' : 'Disabled'}!` });
         }, queue.options.bufferingTimeout);
     }
 };
