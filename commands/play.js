@@ -1,6 +1,7 @@
 const { SlashCommand, CommandOptionType } = require('slash-create');
 const { QueryType } = require('discord-player');
 const { emojis } = require('../helpers/emojis');
+const playdl = require('play-dl');
 module.exports = class extends SlashCommand {
     constructor(creator) {
         super(creator, {
@@ -40,10 +41,10 @@ module.exports = class extends SlashCommand {
 
         const queue = await client.player.createQueue(guild, {
             metadata: channel,
-            ytdlOptions: {
-                filter: 'audioonly',
-                highWaterMark: 1 << 25,
-                dlChunkSize: 0
+            async onBeforeCreateStream(track, source) {
+                if (source === 'youtube') {
+                    return (await playdl.stream(track.url)).stream;
+                }
             }
         });
 
